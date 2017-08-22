@@ -2,14 +2,10 @@ import React from 'react';
 import {
   AppRegistry,
   asset,
-  StyleSheet,
-  Pano,
   Text,
   View,
   Model,
   AmbientLight,
-  Image,
-  Box,
   VideoPano,
   VrButton,
 } from 'react-vr';
