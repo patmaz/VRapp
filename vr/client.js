@@ -10,7 +10,7 @@ function init(bundle, parent, options) {
   const vr = new VRInstance(bundle, 'vrapp', parent, {
     // Add custom options here
     raycasters: [
-      SimpleRaycaster // Add SimpleRaycaster to the options
+      SimpleRaycaster
     ],
     cursorVisibility: 'visible',
     ...options,
