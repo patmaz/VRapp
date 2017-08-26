@@ -18,6 +18,7 @@ export class ImgSwitch extends React.Component {
     this.setState({
       imgVisible: this.state.imgVisible !== true,
     });
+    this.props.hideBtns();
     this.appearHandler();
   };
 
@@ -56,31 +57,33 @@ export class ImgSwitch extends React.Component {
             ],
         }}
       >
-        <VrButton
-          onClick={this.clickHandler}
-          onEnter={this.onEnterHandler}
-          onExit={this.onExitHandler}
-        >
-          <Text
-            style={{
-              backgroundColor: this.state.btnBgr,
-              borderRadius: 0.1,
-              fontSize: 0.2,
-              paddingLeft: 0.2,
-              paddingRight: 0.2,
-              textAlign: 'center',
-              textAlignVertical: 'center',
-              display: this.state.imgVisible ? 'none' : 'flex',
-            }}>
-            { this.props.label }
-          </Text>
-        </VrButton>
+        {!this.props.areBtnsHidden &&
+          <VrButton
+            onClick={this.clickHandler}
+            onEnter={this.onEnterHandler}
+            onExit={this.onExitHandler}
+          >
+            <Text
+              style={{
+                backgroundColor: this.state.btnBgr,
+                borderRadius: 0.1,
+                fontSize: 0.1,
+                paddingLeft: 0.1,
+                paddingRight: 0.1,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+                zIndex: 1,
+              }}>
+              { this.props.label }
+            </Text>
+          </VrButton>}
         <VrButton onClick={()=>this.clickHandler()}>
           <Animated.Image
             source={asset(this.props.img)}
             style={{
               width: 3,
               height: 2,
+              zIndex: 1000,
               transform: [
                 {scale: this.state.bounceValue},
               ],
