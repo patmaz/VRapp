@@ -11,7 +11,7 @@ export class ImgSwitch extends React.Component {
   state = {
     imgVisible: false,
     bounceValue: new Animated.Value(0),
-    btnBgr: 'rgba(86, 86, 86, 0.6)'
+    btnBgr: 'rgba(0, 0, 0, 0.7)',
   };
 
   clickHandler = () => {
@@ -35,13 +35,13 @@ export class ImgSwitch extends React.Component {
 
   onEnterHandler = () => {
     this.setState({
-      btnBgr: 'rgba(86, 86, 86, 0.9)'
+      btnBgr: 'rgba(0, 0, 0, 1)'
     });
   };
 
   onExitHandler = () => {
     this.setState({
-      btnBgr: 'rgba(86, 86, 86, 0.6)'
+      btnBgr: 'rgba(0, 0, 0, 0.7)'
     });
   };
 

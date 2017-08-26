@@ -16,11 +16,18 @@ export default class vrapp extends React.Component {
   state = {
     scene: 0,
     areBtnsHidden: false,
+    isIntroVisible: true,
   };
 
   hideBtns = () => {
     this.setState({
       areBtnsHidden: !this.state.areBtnsHidden,
+    })
+  };
+
+  closeIntoHandler = () => {
+    this.setState({
+      isIntroVisible: false,
     })
   };
 
@@ -52,7 +59,7 @@ export default class vrapp extends React.Component {
           }}
         />
         <AmbientLight intensity={ 2.6 }  />
-        {
+        {!this.state.isIntroVisible &&
           scene.imgs.map(img =>
             <ImgSwitch
               X={img.X}
@@ -66,7 +73,7 @@ export default class vrapp extends React.Component {
             />
           )
         }
-        {!this.state.areBtnsHidden &&
+        {!this.state.areBtnsHidden && !this.state.isIntroVisible &&
           <VrButton
             onClick={this.nextHandler}>
             <Text
@@ -74,7 +81,7 @@ export default class vrapp extends React.Component {
                 position: 'absolute',
                 backgroundColor: '#000000',
                 borderRadius: 0.1,
-                fontSize: 0.1,
+                fontSize: 0.15,
                 layoutOrigin: [0.5, 0.5],
                 paddingLeft: 0.1,
                 paddingRight: 0.1,
@@ -85,7 +92,7 @@ export default class vrapp extends React.Component {
               next
             </Text>
           </VrButton>}
-        {!this.state.areBtnsHidden &&
+        {!this.state.areBtnsHidden && !this.state.isIntroVisible &&
           <VrButton
             onClick={this.prevHandler}>
             <Text
@@ -93,7 +100,7 @@ export default class vrapp extends React.Component {
                 position: 'absolute',
                 backgroundColor: '#000000',
                 borderRadius: 0.1,
-                fontSize: 0.1,
+                fontSize: 0.15,
                 layoutOrigin: [0.5, 0.5],
                 paddingLeft: 0.1,
                 paddingRight: 0.1,
@@ -108,6 +115,59 @@ export default class vrapp extends React.Component {
               prev
             </Text>
           </VrButton>}
+        {this.state.isIntroVisible &&
+          <VrButton
+            onClick={this.closeIntoHandler}
+            style={{
+              position: 'absolute',
+              transform: [{translate: [0, 0, -3]}],
+              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+              borderRadius: 0.1,
+              fontSize: 0.1,
+              layoutOrigin: [0.5, 0.5],
+              width: 2,
+              height: 1,
+              paddingLeft: 0.1,
+              paddingRight: 0.1,
+              paddingTop: 0.1,
+            }}
+          >
+            <Text>
+              Welcome to the VR street art gallery.
+            </Text>
+            <Text>
+              It is the best art gallery in Warsaw (Poland), moved from the Trasa Siekierkowska to VR world.
+            </Text>
+            <Text>
+              Look around, click on img-spots, go further and have fun... click here to start.
+            </Text>
+            <Text
+              style={{
+                fontSize: 0.05,
+              }}
+            >
+              Made by... look down.
+            </Text>
+          </VrButton>}
+        <Text
+          style={{
+            position: 'absolute',
+            backgroundColor: '#000000',
+            borderRadius: 0.1,
+            fontSize: 0.1,
+            layoutOrigin: [0.5, 0.5],
+            paddingLeft: 0.1,
+            paddingRight: 0.1,
+            textAlign: 'center',
+            textAlignVertical: 'center',
+            transform: [
+              {translate: [0, -1, 0]},
+              {rotateX : -90}
+            ],
+
+          }}>
+          Made by patmaz from codebooyah.com :)
+        </Text>
       </View>
     );
   }
