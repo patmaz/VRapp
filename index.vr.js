@@ -17,6 +17,7 @@ export default class vrapp extends React.Component {
     scene: 0,
     areBtnsHidden: false,
     isIntroVisible: true,
+    isLoaded: false,
   };
 
   hideBtns = () => {
@@ -34,14 +35,22 @@ export default class vrapp extends React.Component {
   prevHandler = () => {
     this.setState({
       scene: this.state.scene === 0 ?
-        this.state.scene : this.state.scene  - 1
+        this.state.scene : this.state.scene  - 1,
+      isLoaded: false,
     });
   };
 
   nextHandler = () => {
     this.setState({
       scene: this.state.scene === scenes.length - 1 ?
-        this.state.scene : this.state.scene  + 1
+        this.state.scene : this.state.scene  + 1,
+      isLoaded: false,
+    });
+  };
+
+  isLoadedHandler = () => {
+    this.setState({
+      isLoaded: true,
     });
   };
 
@@ -57,9 +66,10 @@ export default class vrapp extends React.Component {
               {rotateY : 180}
             ],
           }}
+          onLoad={this.isLoadedHandler}
         />
         <AmbientLight intensity={ 2.6 }  />
-        {!this.state.isIntroVisible &&
+        {this.state.isLoaded && !this.state.isIntroVisible &&
           scene.imgs.map(img =>
             <ImgSwitch
               X={img.X}
@@ -73,7 +83,7 @@ export default class vrapp extends React.Component {
             />
           )
         }
-        {!this.state.areBtnsHidden && !this.state.isIntroVisible &&
+        {!this.state.areBtnsHidden && !this.state.isIntroVisible && this.state.isLoaded &&
           <VrButton
             onClick={this.nextHandler}>
             <Text
@@ -92,7 +102,7 @@ export default class vrapp extends React.Component {
               next
             </Text>
           </VrButton>}
-        {!this.state.areBtnsHidden && !this.state.isIntroVisible &&
+        {!this.state.areBtnsHidden && !this.state.isIntroVisible && this.state.isLoaded &&
           <VrButton
             onClick={this.prevHandler}>
             <Text
@@ -115,7 +125,7 @@ export default class vrapp extends React.Component {
               prev
             </Text>
           </VrButton>}
-        {this.state.isIntroVisible &&
+        {this.state.isIntroVisible && this.state.isLoaded &&
           <VrButton
             onClick={this.closeIntoHandler}
             style={{
@@ -168,6 +178,25 @@ export default class vrapp extends React.Component {
           }}>
           Made by patmaz from codebooyah.com :)
         </Text>
+        {!this.state.isLoaded &&
+          <Text
+            style={{
+              position: 'absolute',
+              backgroundColor: '#000000',
+              borderRadius: 0.1,
+              fontSize: 0.2,
+              layoutOrigin: [0.5, 0.5],
+              paddingLeft: 0.1,
+              paddingRight: 0.1,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+              transform: [
+                {translate: [0, 0, -3]}
+              ],
+            }}
+          >
+            Keep calm, loading some awesome content...
+          </Text>}
       </View>
     );
   }

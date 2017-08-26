@@ -12,9 +12,13 @@ export class ImgSwitch extends React.Component {
     imgVisible: false,
     bounceValue: new Animated.Value(0),
     btnBgr: 'rgba(0, 0, 0, 0.7)',
+    isLoaded: false,
   };
 
   clickHandler = () => {
+    if (!this.state.isLoaded) {
+      return;
+    }
     this.setState({
       imgVisible: this.state.imgVisible !== true,
     });
@@ -43,6 +47,12 @@ export class ImgSwitch extends React.Component {
     this.setState({
       btnBgr: 'rgba(0, 0, 0, 0.7)'
     });
+  };
+
+  isLoadedHandler = () => {
+    this.setState({
+      isLoaded: true,
+    })
   };
 
   render() {
@@ -74,7 +84,7 @@ export class ImgSwitch extends React.Component {
                 textAlignVertical: 'center',
                 zIndex: 1,
               }}>
-              { this.props.label }
+              { this.state.isLoaded ? this.props.label : '...' }
             </Text>
           </VrButton>}
         <VrButton onClick={()=>this.clickHandler()}>
@@ -89,6 +99,7 @@ export class ImgSwitch extends React.Component {
               ],
               display: this.state.imgVisible ? 'flex' : 'none',
             }}
+            onLoad={this.isLoadedHandler}
           />
         </VrButton>
       </View>
