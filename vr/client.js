@@ -9,10 +9,6 @@ import {VRInstance} from 'react-vr-web';
 function init(bundle, parent, options) {
   const vr = new VRInstance(bundle, 'vrapp', parent, {
     // Add custom options here
-    raycasters: [
-      SimpleRaycaster
-    ],
-    cursorVisibility: 'visible',
     ...options,
   });
   vr.render = function() {
