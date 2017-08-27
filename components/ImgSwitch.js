@@ -24,6 +24,7 @@ export class ImgSwitch extends React.Component {
     });
     this.props.hideBtns();
     this.appearHandler();
+    this.onExitHandler();
   };
 
   appearHandler = () => {

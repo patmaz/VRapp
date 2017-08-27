@@ -10,6 +10,7 @@ import {
 } from 'react-vr';
 
 import { scenes } from './scenes';
+import { loading } from './loading';
 import {ImgSwitch} from './components/ImgSwitch';
 
 export default class vrapp extends React.Component {
@@ -83,7 +84,11 @@ export default class vrapp extends React.Component {
             />
           )
         }
-        {!this.state.areBtnsHidden && !this.state.isIntroVisible && this.state.isLoaded &&
+        {
+          !this.state.areBtnsHidden &&
+          !this.state.isIntroVisible &&
+          this.state.isLoaded &&
+          this.state.scene !== scenes.length - 1 &&
           <VrButton
             onClick={this.nextHandler}>
             <Text
@@ -101,8 +106,13 @@ export default class vrapp extends React.Component {
               }}>
               next
             </Text>
-          </VrButton>}
-        {!this.state.areBtnsHidden && !this.state.isIntroVisible && this.state.isLoaded &&
+          </VrButton>
+        }
+        {
+          !this.state.areBtnsHidden &&
+          !this.state.isIntroVisible &&
+          this.state.isLoaded &&
+          this.state.scene !== 0 &&
           <VrButton
             onClick={this.prevHandler}>
             <Text
@@ -124,7 +134,8 @@ export default class vrapp extends React.Component {
               }}>
               prev
             </Text>
-          </VrButton>}
+          </VrButton>
+        }
         {this.state.isIntroVisible && this.state.isLoaded &&
           <VrButton
             onClick={this.closeIntoHandler}
@@ -184,7 +195,7 @@ export default class vrapp extends React.Component {
               position: 'absolute',
               backgroundColor: '#000000',
               borderRadius: 0.1,
-              fontSize: 0.2,
+              fontSize: 0.15,
               layoutOrigin: [0.5, 0.5],
               paddingLeft: 0.1,
               paddingRight: 0.1,
@@ -195,7 +206,7 @@ export default class vrapp extends React.Component {
               ],
             }}
           >
-            Keep calm, loading some awesome content...
+            {loading[Math.floor(Math.random()*loading.length)]}
           </Text>}
       </View>
     );
