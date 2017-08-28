@@ -13,6 +13,18 @@ import { scenes } from './scenes';
 import { loading } from './loading';
 import {ImgSwitch} from './components/ImgSwitch';
 
+const btnStyle = {
+  position: 'absolute',
+  backgroundColor: '#000000',
+  borderRadius: 0.1,
+  fontSize: 0.15,
+  layoutOrigin: [0.5, 0.5],
+  paddingLeft: 0.1,
+  paddingRight: 0.1,
+  textAlign: 'center',
+  textAlignVertical: 'center',
+};
+
 export default class vrapp extends React.Component {
   state = {
     scene: 0,
@@ -93,15 +105,7 @@ export default class vrapp extends React.Component {
             onClick={this.nextHandler}>
             <Text
               style={{
-                position: 'absolute',
-                backgroundColor: '#000000',
-                borderRadius: 0.1,
-                fontSize: 0.15,
-                layoutOrigin: [0.5, 0.5],
-                paddingLeft: 0.1,
-                paddingRight: 0.1,
-                textAlign: 'center',
-                textAlignVertical: 'center',
+                ...btnStyle,
                 transform: [{translate: [0, -0.5, -3]}],
               }}>
               next
@@ -117,17 +121,9 @@ export default class vrapp extends React.Component {
             onClick={this.prevHandler}>
             <Text
               style={{
-                position: 'absolute',
-                backgroundColor: '#000000',
-                borderRadius: 0.1,
-                fontSize: 0.15,
-                layoutOrigin: [0.5, 0.5],
-                paddingLeft: 0.1,
-                paddingRight: 0.1,
-                textAlign: 'center',
-                textAlignVertical: 'center',
+                ...btnStyle,
                 transform: [
-                  {translate: [0, -0.5, 3]},
+                  {translate: [0, -1, 3]},
                   {rotateY : 180}
                 ],
 
@@ -160,7 +156,7 @@ export default class vrapp extends React.Component {
               It is the best art gallery in Warsaw (Poland), moved from the Trasa Siekierkowska to VR world.
             </Text>
             <Text>
-              Look around, click on img-spots, go further and have fun... click here to start.
+              Look around, click on foto-spots, go further and have fun... click here to start.
             </Text>
             <Text
               style={{
@@ -192,15 +188,7 @@ export default class vrapp extends React.Component {
         {!this.state.isLoaded &&
           <Text
             style={{
-              position: 'absolute',
-              backgroundColor: '#000000',
-              borderRadius: 0.1,
-              fontSize: 0.15,
-              layoutOrigin: [0.5, 0.5],
-              paddingLeft: 0.1,
-              paddingRight: 0.1,
-              textAlign: 'center',
-              textAlignVertical: 'center',
+              ...btnStyle,
               transform: [
                 {translate: [0, 0, -3]}
               ],
