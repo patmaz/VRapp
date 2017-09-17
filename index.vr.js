@@ -7,198 +7,96 @@ import {
   AmbientLight,
   VrButton,
   Pano,
+  NativeModules,
 } from 'react-vr';
+const Linking = NativeModules.LinkingManager;
 
-import { scenes } from './scenes';
-import { loading } from './loading';
-import {ImgSwitch} from './components/ImgSwitch';
+import { Intro } from './views/Intro';
+import { StreetArt } from './views/StreetArt/View';
 
-const btnStyle = {
-  position: 'absolute',
+btnStyle = {
   backgroundColor: '#000000',
   borderRadius: 0.1,
-  fontSize: 0.15,
+  fontSize: 0.2,
   layoutOrigin: [0.5, 0.5],
-  paddingLeft: 0.1,
-  paddingRight: 0.1,
+  paddingLeft: 0.2,
+  paddingRight: 0.2,
   textAlign: 'center',
   textAlignVertical: 'center',
 };
 
 export default class vrapp extends React.Component {
   state = {
-    scene: 0,
-    areBtnsHidden: false,
-    isIntroVisible: true,
-    isLoaded: false,
+    currentView: null,
   };
 
-  hideBtns = () => {
+  views = [
+    {
+      component: StreetArt,
+      label: 'street art gallery',
+      name: 'streetArt',
+      props: {},
+    },
+  ];
+
+  renderView = (view) => {
+    if (view === null){
+      return;
+    }
+    const ViewToRender = this.views[view].component;
+    return <ViewToRender {...this.views[view].props}/>;
+  };
+
+  changeViewHandler = (view) => {
     this.setState({
-      areBtnsHidden: !this.state.areBtnsHidden,
+      currentView: view,
     })
   };
 
-  closeIntoHandler = () => {
-    this.setState({
-      isIntroVisible: false,
-    })
-  };
-
-  prevHandler = () => {
-    this.setState({
-      scene: this.state.scene === 0 ?
-        this.state.scene : this.state.scene  - 1,
-      isLoaded: false,
-    });
-  };
-
-  nextHandler = () => {
-    this.setState({
-      scene: this.state.scene === scenes.length - 1 ?
-        this.state.scene : this.state.scene  + 1,
-      isLoaded: false,
-    });
-  };
-
-  isLoadedHandler = () => {
-    this.setState({
-      isLoaded: true,
-    });
+  linkHandler = (url) => {
+    Linking.openURL(url).catch(err => console.error('An error occurred', err));
   };
 
   render() {
-    const scene = scenes[this.state.scene];
+    const { currentView } = this.state;
 
     return (
       <View>
-        <Pano
-          source={asset(`/gallery/360_${scene.pano}_stitched_injected_filter.JPG`)}
-          style={{
-            transform: [
-              {rotateY : 180}
-            ],
-          }}
-          onLoad={this.isLoadedHandler}
+        <Intro
+          changeView={this.changeViewHandler}
+          views={this.views}
+          mode={currentView === null ? 'full' : 'btn'}
         />
-        <AmbientLight intensity={ 2.6 }  />
-        {this.state.isLoaded && !this.state.isIntroVisible &&
-          scene.imgs.map(img =>
-            <ImgSwitch
-              X={img.X}
-              Y={img.Y}
-              Z={img.Z}
-              rotate={img.rotate}
-              label={img.label}
-              img={`/gallery/DSC${img.img}_filter.JPG`}
-              areBtnsHidden={this.state.areBtnsHidden}
-              hideBtns={this.hideBtns}
-            />
-          )
-        }
-        {
-          !this.state.areBtnsHidden &&
-          !this.state.isIntroVisible &&
-          this.state.isLoaded &&
-          this.state.scene !== scenes.length - 1 &&
-          <VrButton
-            onClick={this.nextHandler}>
-            <Text
-              style={{
-                ...btnStyle,
-                transform: [{translate: [0, -0.5, -3]}],
-              }}>
-              next
-            </Text>
-          </VrButton>
-        }
-        {
-          !this.state.areBtnsHidden &&
-          !this.state.isIntroVisible &&
-          this.state.isLoaded &&
-          this.state.scene !== 0 &&
-          <VrButton
-            onClick={this.prevHandler}>
-            <Text
-              style={{
-                ...btnStyle,
-                transform: [
-                  {translate: [0, -1, 3]},
-                  {rotateY : 180}
-                ],
 
-              }}>
-              prev
-            </Text>
-          </VrButton>
-        }
-        {this.state.isIntroVisible && this.state.isLoaded &&
-          <VrButton
-            onClick={this.closeIntoHandler}
+        { this.renderView(currentView) }
+
+        <VrButton
+          onClick={() => {this.linkHandler('https://codebooyah.com')}}>
+          <Text
             style={{
               position: 'absolute',
-              transform: [{translate: [0, 0, -3]}],
-              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+              backgroundColor: '#000000',
               borderRadius: 0.1,
               fontSize: 0.1,
               layoutOrigin: [0.5, 0.5],
-              width: 2,
-              height: 1,
               paddingLeft: 0.1,
               paddingRight: 0.1,
-              paddingTop: 0.1,
-            }}
-          >
-            <Text>
-              Welcome to the VR street art gallery.
-            </Text>
-            <Text>
-              It is the best art gallery in Warsaw (Poland), moved from the Trasa Siekierkowska to VR world.
-            </Text>
-            <Text>
-              Look around, click on foto-spots, go further and have fun... click here to start.
-            </Text>
-            <Text
-              style={{
-                fontSize: 0.05,
-              }}
-            >
-              Made by... look down.
-            </Text>
-          </VrButton>}
-        <Text
-          style={{
-            position: 'absolute',
-            backgroundColor: '#000000',
-            borderRadius: 0.1,
-            fontSize: 0.1,
-            layoutOrigin: [0.5, 0.5],
-            paddingLeft: 0.1,
-            paddingRight: 0.1,
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            transform: [
-              {translate: [0, -1, 0]},
-              {rotateX : -90}
-            ],
-
-          }}>
-          Made by patmaz from codebooyah.com :)
-        </Text>
-        {!this.state.isLoaded &&
-          <Text
-            style={{
-              ...btnStyle,
+              textAlign: 'center',
+              textAlignVertical: 'center',
               transform: [
-                {translate: [0, 0, -3]}
+                {translate: [0, -1, 0]},
+                {rotateX : -90}
               ],
-            }}
-          >
-            {loading[Math.floor(Math.random()*loading.length)]}
-          </Text>}
+
+            }}>
+            Made by patmaz from codebooyah.com :)
+          </Text>
+        </VrButton>
       </View>
-    );
+    )
   }
+
+
 };
 
 AppRegistry.registerComponent('vrapp', () => vrapp);
