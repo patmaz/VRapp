@@ -4,87 +4,99 @@ import {
   asset,
   Text,
   View,
-  Model,
   AmbientLight,
   VrButton,
+  Pano,
   NativeModules,
 } from 'react-vr';
 const Linking = NativeModules.LinkingManager;
 
+import { Intro } from './views/Intro';
+import { StreetArt } from './views/StreetArt/View';
+
+btnStyle = {
+  backgroundColor: '#000000',
+  borderRadius: 0.1,
+  fontSize: 0.2,
+  layoutOrigin: [0.5, 0.5],
+  paddingLeft: 0.2,
+  paddingRight: 0.2,
+  textAlign: 'center',
+  textAlignVertical: 'center',
+};
+
 export default class vrapp extends React.Component {
+  state = {
+    currentView: null,
+  };
 
+  views = [
+    {
+      component: StreetArt,
+      label: 'street art gallery',
+      name: 'streetArt',
+      props: {},
+    },
+  ];
 
-  clickHandler = (url) => {
+  renderView = (view) => {
+    if (view === null){
+      return;
+    }
+    const ViewToRender = this.views[view].component;
+    return <ViewToRender {...this.views[view].props}/>;
+  };
+
+  changeViewHandler = (view) => {
+    this.setState({
+      currentView: view,
+    })
+  };
+
+  linkHandler = (url) => {
     Linking.openURL(url).catch(err => console.error('An error occurred', err));
   };
 
   render() {
+    const { currentView } = this.state;
+
     return (
       <View>
-        <AmbientLight intensity={ 2.6 }  />
-        <Model
-          style={{
-          transform: [
-            {translate: [0, 35, -40]},
-            {scale: 0.3 },
-            {rotateY: 20},
-            {rotateX: 20},
-            {rotateZ: 10} ],
-          }}
-          source={{obj:asset('moon.obj'), mtl:asset('moon.mtl')}} lit={true}
+        <Intro
+          changeView={this.changeViewHandler}
+          views={this.views}
+          mode={currentView === null ? 'full' : 'btn'}
         />
 
+        { this.renderView(currentView) }
+
         <VrButton
-          onClick={() => {this.clickHandler('https://360.codebooyah.com/streetart')}}>
+          onClick={() => {this.linkHandler('https://codebooyah.com')}}>
           <Text
             style={{
+              position: 'absolute',
               backgroundColor: '#000000',
               borderRadius: 0.1,
-              fontSize: 0.2,
+              fontSize: 0.1,
               layoutOrigin: [0.5, 0.5],
-              paddingLeft: 0.2,
-              paddingRight: 0.2,
+              paddingLeft: 0.1,
+              paddingRight: 0.1,
               textAlign: 'center',
               textAlignVertical: 'center',
-              transform: [{translate: [0, 0.1, -3]}],
+              transform: [
+                {translate: [0, -1, 0]},
+                {rotateX : -90}
+              ],
+
             }}>
-            street art gallery
-          </Text>
-        </VrButton>
-        <Text
-          style={{
-            backgroundColor: '#000000',
-            borderRadius: 0.1,
-            fontSize: 0.15,
-            layoutOrigin: [0.5, 0.5],
-            paddingLeft: 0.2,
-            paddingRight: 0.2,
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            transform: [{translate: [0, 0, -3]}],
-          }}>
-          or
-        </Text>
-        <VrButton
-          onClick={() => {this.clickHandler('https://360.codebooyah.com/wawa')}}>
-          <Text
-            style={{
-              backgroundColor: '#000000',
-              borderRadius: 0.1,
-              fontSize: 0.2,
-              layoutOrigin: [0.5, 0.5],
-              paddingLeft: 0.2,
-              paddingRight: 0.2,
-              textAlign: 'center',
-              textAlignVertical: 'center',
-              transform: [{translate: [0, -0.1, -3]}],
-            }}>
-            warsaw panorama
+            Made by patmaz from codebooyah.com :)
           </Text>
         </VrButton>
       </View>
-    );
+    )
   }
+
+
 };
 
 AppRegistry.registerComponent('vrapp', () => vrapp);
