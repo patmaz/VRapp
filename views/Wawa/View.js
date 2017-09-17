@@ -12,10 +12,10 @@ export class Wawa extends React.Component {
     return (
       <View>
         <VideoPano
-          source={asset('360_720p.mp4')}
+          source={asset('/wawa/360_720p.mp4')}
           loop={true}
           muted={true}
-          poster={asset('360.JPG')}
+          poster={asset('/wawa/360.JPG')}
         />
         <AmbientLight intensity={ 2.6 }  />
       </View>

@@ -6,12 +6,13 @@ import {
   AmbientLight,
   VrButton,
   Text,
+  Pano,
 } from 'react-vr';
 
 btnStyle = {
-  backgroundColor: '#000000',
+  backgroundColor: 'rgba(0, 0, 0, 0.9)',
   borderRadius: 0.1,
-  fontSize: 0.2,
+  fontSize: 0.1,
   layoutOrigin: [0.5, 0.5],
   paddingLeft: 0.2,
   paddingRight: 0.2,
@@ -26,7 +27,7 @@ export class Intro extends React.Component {
         <View style={{
           position: 'absolute',
           transform: [
-            {translate: [0, 4, -4]},
+            {translate: [0, 2.5, -4]},
             {rotateX : 20},
           ]
         }}>
@@ -36,7 +37,7 @@ export class Intro extends React.Component {
             <Text
               style={{
                 ...btnStyle,
-                width: 2,
+                width: 1,
               }}>
               return
             </Text>
@@ -49,6 +50,9 @@ export class Intro extends React.Component {
       <View
         style={{transform: [{translate: [0, 0, 0]},]}}
       >
+        <Pano
+          source={asset('360_intro.jpg')}
+        />
         <AmbientLight intensity={ 2.6 }  />
         <Model
           style={{
@@ -61,8 +65,37 @@ export class Intro extends React.Component {
           }}
           source={{obj:asset('moon.obj'), mtl:asset('moon.mtl')}} lit={true}
         />
+        <View
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            borderRadius: 0.1,
+            fontSize: 0.1,
+            layoutOrigin: [0.5, 0.5],
+            width: 2,
+            height: 1,
+            paddingLeft: 0.1,
+            paddingRight: 0.1,
+            paddingTop: 0.05,
+            transform: [{translate: [-0.8, 0, -2]}],
+            position: 'absolute',
+          }}
+        >
+          <Text>
+            Welcome to the 360 Project - my playground focused on web VR development using ReactVR framework.
+          </Text>
+          <Text>
+            Choose one of the places in VR for further exploration. In any time you can look up forward in order to return to this home place. Enjoy!
+          </Text>
+          <Text
+            style={{
+              fontSize: 0.05,
+            }}
+          >
+            Made by... look down.
+          </Text>
+        </View>
         <View style={{
-          transform: [{translate: [0, 0, -2]}],
+          transform: [{translate: [0.8, 0.25, -2]}],
           position: 'absolute',
           flex: 1,
           flexDirection: 'column',
@@ -78,7 +111,7 @@ export class Intro extends React.Component {
                   style={{
                     ...btnStyle,
                     marginTop: 0.1,
-                    width: 2,
+                    width: 1,
                   }}>
                   { view.label }
                 </Text>
