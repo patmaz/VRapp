@@ -62,7 +62,7 @@ export class Intro extends React.Component {
           source={{obj:asset('moon.obj'), mtl:asset('moon.mtl')}} lit={true}
         />
         <View style={{
-          transform: [{translate: [0, 0, -5]}],
+          transform: [{translate: [0, 0, -2]}],
           position: 'absolute',
           flex: 1,
           flexDirection: 'column',

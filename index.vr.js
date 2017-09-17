@@ -13,17 +13,7 @@ const Linking = NativeModules.LinkingManager;
 
 import { Intro } from './views/Intro';
 import { StreetArt } from './views/StreetArt/View';
-
-btnStyle = {
-  backgroundColor: '#000000',
-  borderRadius: 0.1,
-  fontSize: 0.2,
-  layoutOrigin: [0.5, 0.5],
-  paddingLeft: 0.2,
-  paddingRight: 0.2,
-  textAlign: 'center',
-  textAlignVertical: 'center',
-};
+import { Wawa } from './views/Wawa/View';
 
 export default class vrapp extends React.Component {
   state = {
@@ -37,6 +27,12 @@ export default class vrapp extends React.Component {
       name: 'streetArt',
       props: {},
     },
+    {
+      component: Wawa,
+      label: 'warsaw panorama',
+      name: 'wawa',
+      props: {},
+    }
   ];
 
   renderView = (view) => {
