@@ -51,13 +51,16 @@ export class Intro extends React.Component {
         style={{transform: [{translate: [0, 0, 0]},]}}
       >
         <Pano
-          source={asset('360_intro.jpg')}
+          source={asset('360_intro_forest.jpg')}
+          style={{
+            transform: [{rotateY: 90}],
+          }}
         />
         <AmbientLight intensity={ 2.6 }  />
         <Model
           style={{
             transform: [
-              {translate: [0, 35, -40]},
+              {translate: [0, 70, -100]},
               {scale: 0.3 },
               {rotateY: 20},
               {rotateX: 20},
