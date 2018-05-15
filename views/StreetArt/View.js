@@ -178,6 +178,28 @@ export class StreetArt extends React.Component {
         >
           {loading[Math.floor(Math.random()*loading.length)]}
         </Text>}
+        <VrButton
+          onClick={() => {this.linkHandler('https://codebooyah.com')}}>
+          <Text
+            style={{
+              position: 'absolute',
+              backgroundColor: '#000000',
+              borderRadius: 0.1,
+              fontSize: 0.1,
+              layoutOrigin: [0.5, 0.5],
+              paddingLeft: 0.1,
+              paddingRight: 0.1,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+              transform: [
+                {translate: [0, -1, 0]},
+                {rotateX : -90}
+              ],
+
+            }}>
+            Made by patmaz from codebooyah.com :)
+          </Text>
+        </VrButton>
       </View>
     );
   }
