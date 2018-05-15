@@ -10,7 +10,7 @@ import {
 
 import { scenes } from './scenes';
 import { loading } from './loading';
-import {ImgSwitch} from '../../components/ImgSwitch';
+import { ImgSwitch } from '../../components/ImgSwitch';
 
 const btnStyle = {
   position: 'absolute',

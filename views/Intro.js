@@ -98,7 +98,7 @@ export class Intro extends React.Component {
           </Text>
         </View>
         <View style={{
-          transform: [{translate: [0.8, 0.25, -2]}],
+          transform: [{translate: [0.8, 0.4, -2]}],
           position: 'absolute',
           flex: 1,
           flexDirection: 'column',

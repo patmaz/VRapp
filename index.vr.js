@@ -14,6 +14,7 @@ const Linking = NativeModules.LinkingManager;
 import { Intro } from './views/Intro';
 import { StreetArt } from './views/StreetArt/View';
 import { Wawa } from './views/Wawa/View';
+import { Drone } from './views/Drone/View'
 
 export default class vrapp extends React.Component {
   state = {
@@ -28,11 +29,17 @@ export default class vrapp extends React.Component {
       props: {},
     },
     {
+      component: Drone,
+      label: '360 from drone',
+      name: 'drone',
+      props: {},
+    },
+    {
       component: Wawa,
       label: 'warsaw panorama',
       name: 'wawa',
       props: {},
-    }
+    },
   ];
 
   renderView = (view) => {
