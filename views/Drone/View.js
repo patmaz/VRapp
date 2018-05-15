@@ -49,7 +49,7 @@ export class Drone extends React.Component {
     return (
       <View>
         <Pano
-          source={asset(`/drone/${scene.pano}.JPG`)}
+          source={asset(`/drone/${scene.pano}.jpg`)}
           style={{
             transform: [
               {rotateY : 180}
